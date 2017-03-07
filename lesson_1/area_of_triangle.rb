@@ -1,5 +1,5 @@
 puts 'PLease, enter base of the triangle'
-a = gets.chomp
+a = gets.chomp.to_f
 puts 'Please, enter height of triangle'
-h = gets.chomp
-puts "Area of triangle is #{(a.to_i*h.to_i)/2}."
+h = gets.chomp.to_f
+puts "Area of triangle is #{(a*h)/2}."
