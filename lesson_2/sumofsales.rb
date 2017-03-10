@@ -15,5 +15,5 @@ loop do
   p basket
   puts "For product #{product_name} you should pay #{by_product}"
   total += by_product
-  end
+end
 puts "Total payment - #{total}"
