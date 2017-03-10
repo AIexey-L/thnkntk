@@ -1,13 +1,5 @@
-range = Range.new('a','z')
+range = ('a'..'z')
 result = {}
-vowelsindex = 0
-letterindex = 1
-vowels = ['a', 'e', 'i', 'o', 'u']
-range.each do |letter|
-  if letter == vowels[vowelsindex]
-    result[letter] = letterindex
-    vowelsindex += 1
-  end
-  letterindex += 1
-end
+vowels = %w( a e i o u )
+range.each.with_index(1) { |letter, index| result[letter] = index if vowels.include?(letter) }
 p result

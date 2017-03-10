@@ -12,10 +12,4 @@ month = {
          november: 30,
          december: 31
         }
-result = {}
-month.each do |name, days|
-  if days == 30
-    result[name] = month[name]
-  end
-end
-p result
+ month.each  { |name, days| p name if days == 30 }
