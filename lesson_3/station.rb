@@ -2,11 +2,10 @@ require_relative './train.rb'
 require_relative './station.rb'
 
 class Station
+  attr_reader :station, :trains
   
-  attr_reader :station_name, :trains
-  
-  def initialize(station_name)
-    @station_name = station_name
+  def initialize(station)
+    @station = station
     @trains = []
   end
     
@@ -15,7 +14,7 @@ class Station
     puts "Train #{train} departed"
   end
   
-  def get_train(train)
+  def set_train(train)
     @trains << train
     puts "Train #{train} arrived"
   end
