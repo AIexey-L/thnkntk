@@ -2,10 +2,10 @@ require_relative './train.rb'
 require_relative './station.rb'
 
 class Station
-  attr_reader :station, :trains
+  attr_reader :name, :trains
   
-  def initialize(station)
-    @station = station
+  def initialize(name)
+    @name = name
     @trains = []
   end
     
@@ -20,7 +20,7 @@ class Station
   end
   
   def trains_by_type(type_of_train)
-    @trains.find_all { |x| x.type == type_of_train }
+    @trains.find_all { |train| train.type == type_of_train }
   end
   
 end
