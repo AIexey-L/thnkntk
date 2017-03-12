@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-puts "Please, enter first side of triangle."
+puts 'Please, enter first side of triangle.'
 a = gets.chomp.to_f
-puts "Please, enter second side of triangle."
+puts 'Please, enter second side of triangle.'
 b = gets.chomp.to_f
-puts " Please, enter third side of triangle."
+puts ' Please, enter third side of triangle.'
 c = gets.chomp.to_f
 if a > b && a > c
   hipotenuse = a
@@ -19,13 +19,11 @@ elsif c > a && c > b
   cathetus_two = b
 end
 if a == b || a == c || c == b
-  puts "Triangle is isosceles triangle (равнобедренный)"
+  puts 'Triangle is isosceles triangle (равнобедренный)'
 end
 if a == b && a == c
-  puts "Triangle is equilateral.(равносторонний)"
+  puts 'Triangle is equilateral.(равносторонний)'
 end
-unless hipotenuse.nil?
-if hipotenuse ** 2 == (cathetus_one ** 2) + (cathetus_two ** 2)
-  puts "Triangle is right (прямоугольный)"
-end
+if hipotenuse && hipotenuse**2 == (cathetus_one**2) + (cathetus_two**2)
+    puts 'Triangle is right (прямоугольный)'
 end
