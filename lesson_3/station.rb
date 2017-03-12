@@ -2,29 +2,26 @@ require_relative './train.rb'
 require_relative './station.rb'
 
 class Station
-  attr_reader :station_name
+  
+  attr_reader :station_name, :trains
+  
   def initialize(station_name)
     @station_name = station_name
-    @list_train = []
+    @trains = []
   end
-  def list_train
-    format(@list_train)
-  end
+    
   def send_train(train)
-    @list_train.delete(train)
+    @trains.delete(train)
     puts "Train #{train} departed"
   end
+  
   def get_train(train)
-    @list_train << train
+    @trains << train
     puts "Train #{train} arrived"
   end
-  def list_train_by_type
-    pass_trains = @list_train.find_all { |x| x.type == 'pass' }
-    puts "Passenger trains: #{format(pass_trains)}"
-    freight_trains = @list_train.find_all { |x| x.type == 'freight' }
-    puts "Freight trains: #{format(freight_trains)}"
+  
+  def trains_by_type(type_of_train)
+    @trains.find_all { |x| x.type == type_of_train }
   end
-  def format(x)
-    x.each { |x| puts "train number#{x.number}, type -  #{x.type}" }
-  end
+  
 end
