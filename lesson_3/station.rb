@@ -1,5 +1,5 @@
 require_relative './train.rb'
-require_relative './station.rb'
+require_relative './route.rb'
 
 class Station
   attr_reader :name, :trains
@@ -19,7 +19,7 @@ class Station
     puts "Train #{train} arrived"
   end
   
-  def trains_by_type(type_of_train)
+  def type(type_of_train)
     @trains.find_all { |train| train.type == type_of_train }
   end
   
