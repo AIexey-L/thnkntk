@@ -19,8 +19,8 @@ class Station
     puts "Train #{train} arrived"
   end
   
-  def trains_by_type(by_type)
-    @trains.find_all { |train| train.type == by_type }
+  def trains_by_type(type)
+    @trains.find_all { |train| train.type == type }
   end
   
 end

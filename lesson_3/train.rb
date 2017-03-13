@@ -35,7 +35,7 @@ class Train
   def go_forward
     if @route && @index_current_station < @route.stations.length - 1
       @index_current_station += 1
-      arrival_departure
+      move
     else
       puts 'No route loaded or no next station!'
     end
@@ -44,7 +44,7 @@ class Train
   def go_backward
     if @route && @index_current_station - 1 >= 0
       @index_current_station -= 1
-      arrival_departure
+      move
     else
       puts 'No route loaded or no previouse station'
     end
@@ -74,7 +74,7 @@ class Train
     end
   end
 
-  def arrival_departure
+  def move
     @route.stations[@index_current_station].set_train(self)
     @route.stations[@index_current_station - 1].send_train(self)
   end
