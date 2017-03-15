@@ -120,7 +120,9 @@ class Application
   end
 
   private
-
+  # following methods are protected because they are inner methods for use only in Application
+  # and don't need to be visible outside by client's code
+  
   def station_exist?(station)
     true if get_station(station)
   end
