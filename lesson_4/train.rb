@@ -10,7 +10,6 @@ class Train
     @speed = 0
   end
 
-  # following methods are protected because they are using only by Train subclasses
   def accelerate(speed)
     @speed += speed
   end
@@ -20,7 +19,7 @@ class Train
   end
   
   def attach_carriage(carriage)
-    @carriages << carriage if @speed.zero?
+    @carriages << carriage if @speed.zero? && same_type_carriage?(carriage)
   end
   
   def detach_carriage(carriage)
@@ -81,6 +80,10 @@ class Train
   def move
     @route.stations[@index_current_station].set_train(self)
     @route.stations[@index_current_station - 1].send_train(self)
+  end
+
+  def same_type_carriage?(carriage)
+    true if carriage.is_a?(PassengerCarriage) && self.is_a?(PassengerTrain) || carriage.is_a?(CargoCarriage) && self.is_a?(CargoTrain)
   end
       
 end
