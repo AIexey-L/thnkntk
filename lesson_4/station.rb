@@ -1,12 +1,3 @@
-require_relative 'main'
-require_relative 'train'
-require_relative 'station'
-require_relative 'route'
-require_relative 'cargo_carriage'
-require_relative 'cargo_train'
-require_relative 'passenger_carriage'
-require_relative 'passenger_train'
-
 class Station
   attr_reader :name, :trains
   
@@ -17,12 +8,12 @@ class Station
     
   def send_train(train)
     @trains.delete(train)
-    puts "Train #{train} departed"
+    puts "Train #{train.number} #{train.type} departed from #{self.name}"
   end
   
   def set_train(train)
     @trains << train
-    puts "Train #{train} arrived"
+    puts "Train #{train.number} #{train.type} arrived to #{self.name}"
   end
   
   def trains_by_type(type)
