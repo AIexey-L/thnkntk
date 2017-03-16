@@ -1,15 +1,16 @@
 module InstanceCounter
 
-  @@instances = 0
-  
-  def self.instances
-    @@instances
+  module ClassMethods
+    attr_accessor :instances
   end
 
-  private
-  
-  def register_instance
-    @@instances += 1
+  module InstanceMethods
+
+    def register_instance
+      self.class.instances ||= 0
+      self.class.instances += 1
+    end
+    
   end
   
 end

@@ -1,22 +1,26 @@
-require_relative = 'manufacturer'
+require_relative 'instance_counter'
+require_relative 'manufacturer'
 require_relative 'station'
 
 class Train
   attr_reader :speed, :carriages, :type, :number
-  @@all = []
+  @@all = {}
 
   include Manufacturer
+  include InstanceCounter::InstanceMethods
+  extend InstanceCounter::ClassMethods
   
   def initialize(number)
     @number = number
     @type = self.class
     @carriages = []
     @speed = 0
-    @@all << self
+    @@all[number] = self
+    register_instance
   end
 
   def self.find(number)
-    @@all.find { |train| train.number == number.to_i }
+    @@all[number]
   end
 
   def accelerate(speed)
