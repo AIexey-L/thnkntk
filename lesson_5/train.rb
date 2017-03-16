@@ -3,8 +3,9 @@ require_relative 'station'
 
 class Train
   attr_reader :speed, :carriages, :type, :number
-
   @@all = []
+
+  include Manufacturer
   
   def initialize(number)
     @number = number
