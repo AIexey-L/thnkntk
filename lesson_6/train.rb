@@ -35,11 +35,11 @@ class Train
   end
   
   def attach_carriage(carriage)
-    @carriages << carriage if @speed.zero? && carriage_valid_or_exist?
+    @carriages << carriage if @speed.zero? && carriage_valid_or_exist?(carriage)
   end
   
   def detach_carriage(carriage)
-    @carriages.delete(carriage) if @speed.zero? && carriage_valid_or_exist?
+    @carriages.delete(carriage) if @speed.zero? && carriage_valid_or_exist?(carriage)
   end
 
   def set_route(set_route)
@@ -86,7 +86,8 @@ class Train
   end
 
   def same_type_carriage?(carriage)
-    true if carriage.is_a?(PassengerCarriage) && self.is_a?(PassengerTrain) || carriage.is_a?(CargoCarriage) && self.is_a?(CargoTrain)
+    raise 'wrong type of carriage' unless carriage.is_a?(PassengerCarriage) && self.is_a?(PassengerTrain) || carriage.is_a?(CargoCarriage) && self.is_a?(CargoTrain)
+    true
   end
 
   def validate!
@@ -94,7 +95,7 @@ class Train
     true
   end
 
-  def carriage_valid_or_exist?
+  def carriage_valid_or_exist?(carriage)
     raise "Carriage with wrong type or don\'t exist" unless same_type_carriage?(carriage) || @carriages.length > 0
     true
   end

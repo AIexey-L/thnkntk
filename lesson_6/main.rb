@@ -26,85 +26,49 @@ class Application
       @trains_collection << CargoTrain.new(number)
   end
 
-  def make_route
-    puts 'enter first station'
-    f_station = gets.chomp
-    puts 'enter last station'
-    l_station = gets.chomp
+  def make_route(f_station, l_station)
     if station_exist?(f_station) && station_exist?(l_station)
       @routs_collection << Route.new(get_station(f_station), get_station(l_station))
-      puts 'route created!'
-    else
-      puts 'you should create stations first!'
     end
   end
 
-  def assign_route
-    puts 'enter train number'
-    train_number = gets.chomp.to_i
-    puts 'enter first station'
-    f_station = gets.chomp
-    puts 'enter last station'
-    l_station = gets.chomp
-    if route_exist?(f_station, l_station)
-      get_train(train_number).set_route(get_route(f_station, l_station))
-    else
-      puts 'route don\'t exist'
-    end
+  def assign_route(train_number, f_station, l_station)
+    get_train(train_number).set_route(get_route(f_station, l_station)) if route_exist?(f_station, l_station)
   end
   
-  def add_carriage
-    puts 'enter train number'
-    train_number = gets.chomp
-    if train_exist?(train_number)
-      make_carriages
-      p get_train(train_number)
-      p @carriage
-      get_train(train_number).attach_carriage(@carriage)
-    else
-      puts 'you should create train first'
-    end
+  def add_carriage(train_number)
+    get_train(train_number).attach_carriage(@carriage) if train_exist?(train_number)
   end
 
-  def remove_carriage
-    puts 'enter train number'
-    train_number = gets.chomp.to_i
-    if train_exist?(train_number)
+  def remove_carriage(train_number)
+    if train_exist?(train_number) && train_has_any_carriages?(train_number)
       @carriage = get_train(train_number).carriages.last
       get_train(train_number).detach_carriage(@carriage)
-    else
-      puts 'you should create train first'
     end
   end
 
-  def move_forward
-    puts 'enter train number'
-    train_number = gets.chomp.to_i
-    if train_exist?(train_number)
-      get_train(train_number).go_forward
-    else
-      puts 'you should create train first'
-    end
+  def move_forward(train_number)
+    get_train(train_number).go_forward if train_exist?(train_number)
   end
   
-  def move_backward
-    puts 'enter train number'
-    train_number = gets.chomp.to_i
-    if train_exist?(train_number)
-      get_train(train_number).go_backward
-    else
-      puts 'you should create train first'
-    end
+  def move_backward(train_number)
+    get_train(train_number).go_backward if train_exist?(train_number)
   end
 
   def see_stations
     @stations_collection.each { |station| puts "station: #{station.name}" }
   end
 
-  def see_trains_on_station
-    puts 'enter station name'
-    station = gets.chomp
-    get_station(station).trains.each { |train| puts "train number #{train.number} #{train.type} with #{train.carriages.length} carriages"}
+  def see_trains_on_station(station)
+    get_station(station).trains.each { |train| puts "train number #{train.number} #{train.type} with #{train.carriages.length} carriages"} if station_exist?(station)
+  end
+  
+  def make_passenger_carriage
+      @carriage = PassengerCarriage.new
+  end
+
+  def make_cargo_carriage
+      @carriage = CargoCarriage.new
   end
 
   private
@@ -119,18 +83,6 @@ class Application
   def train_exist?(trn)
     raise "train don\'t exist" unless get_train(trn)
     true
-  end
-
-  def make_carriages
-    puts 'enter 1 for make passenger carriage and 2 for cargo cargo carriage'
-    input = gets.chomp.to_i
-    if input == 1
-      @carriage = PassengerCarriage.new
-    elsif input == 2
-      @carriage = CargoCarriage.new
-    else
-      puts 'you should enter 1 or 2'   
-    end
   end
 
   def route_exist?(first_station, last_station)
@@ -148,6 +100,11 @@ class Application
 
   def get_station(stat)
     @stations_collection.find { |station| station.name == stat }
+  end
+
+  def train_has_any_carriages?(train_number)
+    raise 'train has no carriages' if get_train(train_number).carriages.last.nil?
+    true
   end
 end
 
