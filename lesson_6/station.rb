@@ -6,8 +6,8 @@ class Station
   STATION_NAME_FORMAT = /[a-z]{3,}\s*-*\s*/i
 
   def initialize(name)
-    validate!
     @name = name
+    validate!
     @trains = []
     @@all << self
   end

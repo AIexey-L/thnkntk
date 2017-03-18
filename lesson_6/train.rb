@@ -13,8 +13,8 @@ class Train
   extend InstanceCounter::ClassMethods
   
   def initialize(number)
-    validate!
     @number = number
+    validate!
     @type = self.class
     @carriages = []
     @speed = 0

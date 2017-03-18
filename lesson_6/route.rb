@@ -3,8 +3,8 @@ class Route
   attr_reader :stations
   
   def initialize(first_station, last_station)
-    validate!
     @stations = [first_station, last_station]
+    validate!
   end
   
   def add_station(add_station)
@@ -18,7 +18,7 @@ class Route
   private
 
   def validate!
-    raise 'station is not valid' unless first_station.is_a?(Station) && last_station.is_a?(Station)
+    raise 'station is not valid' unless @stations.all? { |station| station.class == Station }
     true
   end
   
