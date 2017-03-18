@@ -1,7 +1,19 @@
 require_relative 'main'
 
-class Menu
+
+module ErrorHandler
   
+  def error_handler(e)
+    puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
+    puts "\ntry again"
+  end
+  
+end
+
+
+
+class Menu
+  extend ErrorHandler
   app = Application.new
 
   loop do
@@ -23,8 +35,7 @@ class Menu
         app.make_station(input)
         puts "---------- station #{input} created! ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
 
     when 2
@@ -44,9 +55,7 @@ class Menu
           puts "\n---------- cargo train number #{number} created ----------"
         end
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts 'number format: XXXXX or XXX-XX'
-        puts "\ntry again"
+        error_handler(e)
       end
       
     when 3
@@ -59,8 +68,7 @@ class Menu
         app.make_route(f_station, l_station)
         puts "---------- route #{f_station} #{l_station} created ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
       
     when 4
@@ -74,8 +82,7 @@ class Menu
         app.assign_route(train_number, f_station, l_station)
         puts "---------- route #{f_station} #{l_station} assigned to train number #{train_number} ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
       
     when 5
@@ -97,8 +104,7 @@ class Menu
         app.add_carriage(train_number)
         puts "---------- carriage attached to train number #{train_number} ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
 
     when 6
@@ -109,8 +115,7 @@ class Menu
         app.remove_carriage(train_number)
         puts "---------- carriage removed from train number #{train_number} ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
       
     when 7
@@ -121,8 +126,7 @@ class Menu
         app.move_forward(train_number)
         puts "---------- train number #{train_number} moved forward ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
       
     when 8
@@ -133,8 +137,7 @@ class Menu
         app.move_backward(train_number)
         puts "---------- train number #{train_number} moved backward ----------"
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
       
     when 9
@@ -148,9 +151,18 @@ class Menu
         station = gets.chomp
         app.see_trains_on_station(station)
       rescue RuntimeError => e
-        puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
-        puts "\ntry again"
+        error_handler(e)
       end
+      
     end
+
+    # def self.error_handler(e)
+    #   puts "#{e.message}"
+    #   puts "working!"
+    # end
+      
+    
   end
 end
+
+    
