@@ -13,13 +13,13 @@ class Train
   extend InstanceCounter::ClassMethods
   
   def initialize(number)
+    validate!
     @number = number
     @type = self.class
     @carriages = []
     @speed = 0
     @@all[number] = self
     register_instance
-    validate!
   end
 
   def self.find(number)

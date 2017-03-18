@@ -6,10 +6,10 @@ class Station
   STATION_NAME_FORMAT = /[a-z]{3,}\s*-*\s*/i
 
   def initialize(name)
+    validate!
     @name = name
     @trains = []
     @@all << self
-    validate!
   end
 
   def self.all
@@ -39,9 +39,9 @@ class Station
   private
 
   def validate!
+    raise 'Station name should not be nil' if name.nil?
     raise 'Sation name is not valid' if name !~ STATION_NAME_FORMAT
     raise 'Station name too long' if name.length > 15
-    raise 'Station name should not be nil' if name.nil?
     true
   end
   
