@@ -1,21 +1,29 @@
 require_relative 'main'
 
+  app = Application.new
 
-module ErrorHandler
-  
   def error_handler(e)
     puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
     puts "\ntry again"
   end
+
+  def enter_train_number
+    puts 'enter train number'
+    @train_number = gets.chomp
+  end
+
+  def enter_name_of_station
+    puts 'enter name of station'
+    @station = gets.chomp
+  end
+
+  def enter_two_stations
+    puts 'enter first station'
+    @f_station = gets.chomp
+    puts 'enter last station'
+    @l_station = gets.chomp
+  end
   
-end
-
-
-
-class Menu
-  extend ErrorHandler
-  app = Application.new
-
   loop do
     puts "\n---------- MENU ----------\n\nenter number:\n\n1 - make_station"
     puts "2 - make_train\n3 - make_route"
@@ -30,10 +38,9 @@ class Menu
     when 1
       begin
         puts '---------- making station ----------'
-        puts 'enter name of station'
-        input = gets.chomp
-        app.make_station(input)
-        puts "---------- station #{input} created! ----------"
+        enter_name_of_station
+        app.make_station(@station)
+        puts "---------- station #{@station} created! ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
@@ -44,15 +51,13 @@ class Menu
         puts 'enter 1 for passenger train and 2 for cargo train'
         input = gets.chomp.to_i
         if input == 1
-          puts 'enter number of train'
-          number = gets.chomp
-          app.make_passenger_train(number)
-          puts "\n---------- passenger train number #{number} created ----------"
+          enter_train_number
+          app.make_passenger_train(@number)
+          puts "\n---------- passenger train number #{@number} created ----------"
         elsif input == 2
-          puts 'enter number of train'
-          number = gets.chomp
-          app.make_cargo_train(number)
-          puts "\n---------- cargo train number #{number} created ----------"
+          enter_train_number
+          app.make_cargo_train(@number)
+          puts "\n---------- cargo train number #{@number} created ----------"
         end
       rescue RuntimeError => e
         error_handler(e)
@@ -61,26 +66,19 @@ class Menu
     when 3
       begin
         puts '---------- making route ----------'
-        puts 'enter first station'
-        f_station = gets.chomp
-        puts 'enter last station'
-        l_station = gets.chomp
-        app.make_route(f_station, l_station)
-        puts "---------- route #{f_station} #{l_station} created ----------"
+        enter_two_stations
+        app.make_route(@f_station, @l_station)
+        puts "---------- route #{@f_station} #{@l_station} created ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
       
     when 4
       begin
-        puts 'enter train number'
-        train_number = gets.chomp.to_i
-        puts 'enter first station'
-        f_station = gets.chomp
-        puts 'enter last station'
-        l_station = gets.chomp
-        app.assign_route(train_number, f_station, l_station)
-        puts "---------- route #{f_station} #{l_station} assigned to train number #{train_number} ----------"
+        enter_train_number
+        enter_two_stations
+        app.assign_route(@train_number, @f_station, @l_station)
+        puts "---------- route #{@f_station} #{@l_station} assigned to train number #{@train_number} ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
@@ -99,10 +97,9 @@ class Menu
       
       begin
         puts '---------- attaching carriage ----------'
-        puts 'enter train number'
-        train_number = gets.chomp
-        app.add_carriage(train_number)
-        puts "---------- carriage attached to train number #{train_number} ----------"
+        enter_train_number
+        app.add_carriage(@train_number)
+        puts "---------- carriage attached to train number #{@train_number} ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
@@ -110,10 +107,9 @@ class Menu
     when 6
       begin
         puts '---------- removing carriage ----------'
-        puts 'enter train number'
-        train_number = gets.chomp
-        app.remove_carriage(train_number)
-        puts "---------- carriage removed from train number #{train_number} ----------"
+        enter_train_number
+        app.remove_carriage(@train_number)
+        puts "---------- carriage removed from train number #{@train_number} ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
@@ -121,10 +117,9 @@ class Menu
     when 7
       begin
         puts '---------- moving train forward ----------'
-        puts 'enter train number'
-        train_number = gets.chomp
-        app.move_forward(train_number)
-        puts "---------- train number #{train_number} moved forward ----------"
+        enter_train_number
+        app.move_forward(@train_number)
+        puts "---------- train number #{@train_number} moved forward ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
@@ -132,10 +127,9 @@ class Menu
     when 8
       begin
         puts '---------- moving train backward ----------'
-        puts 'enter train number'
-        train_number = gets.chomp
-        app.move_backward(train_number)
-        puts "---------- train number #{train_number} moved backward ----------"
+        enter_train_number
+        app.move_backward(@train_number)
+        puts "---------- train number #{@train_number} moved backward ----------"
       rescue RuntimeError => e
         error_handler(e)
       end
@@ -147,22 +141,12 @@ class Menu
     when 10
       begin
         puts '---------- trains on station ----------'
-        puts 'enter station name'
-        station = gets.chomp
-        app.see_trains_on_station(station)
+        enter_name_of_station
+        app.see_trains_on_station(@station)
       rescue RuntimeError => e
         error_handler(e)
       end
       
     end
-
-    # def self.error_handler(e)
-    #   puts "#{e.message}"
-    #   puts "working!"
-    # end
-      
     
   end
-end
-
-    
