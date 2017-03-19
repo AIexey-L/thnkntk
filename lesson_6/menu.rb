@@ -52,12 +52,13 @@ require_relative 'main'
         input = gets.chomp.to_i
         if input == 1
           enter_train_number
-          app.make_passenger_train(@number)
-          puts "\n---------- passenger train number #{@number} created ----------"
+          app.make_passenger_train(@train_number)
+          p @train_number
+          puts "\n---------- passenger train number #{@train_number} created ----------"
         elsif input == 2
           enter_train_number
-          app.make_cargo_train(@number)
-          puts "\n---------- cargo train number #{@number} created ----------"
+          app.make_cargo_train(@train_number)
+          puts "\n---------- cargo train number #{@train_number} created ----------"
         end
       rescue RuntimeError => e
         error_handler(e)

@@ -6,7 +6,7 @@ class Train
   attr_reader :speed, :carriages, :type, :number
   @@all = {}
 
-  VALID_TRAIN_NUMBER = /^[a-z0-9]{3}-*[a-z0-9]{2}/
+  VALID_TRAIN_NUMBER = /^[a-z0-9]{3}-*[a-z0-9]{2}/i
   
   include Manufacturer
   include InstanceCounter::InstanceMethods
@@ -14,7 +14,6 @@ class Train
   
   def initialize(number)
     @number = number
-    p number
     validate!
     @type = self.class
     @carriages = []
@@ -76,7 +75,16 @@ class Train
   rescue
     true
   end
-  
+
+  #method should be renamed further
+  def train_block_method
+    carriage_number = 0
+    carriages.each do |car|
+      carriage_number += 1 
+      yield(car, carriage_number)
+    end
+  end
+    
   private
   
   # private  because move uses only in Train class, it's a helper method

@@ -19,7 +19,6 @@ class Application
   end
 
   def make_passenger_train(number)
-    p number
     @trains_collection << PassengerTrain.new(number)
   end
 
@@ -61,18 +60,29 @@ class Application
   end
 
   def see_trains_on_station(station)
-    get_station(station).trains.each { |train| puts "train number #{train.number} #{train.type} with #{train.carriages.length} carriages"} if station_exist?(station)
+    # get_station(station).trains.each { |train| puts "train number #{train.number} #{train.type} with #{train.carriages.length} carriages"} if station_exist?(station)
+    get_station(station).station_block_method { |trn| puts "Train number #{trn.number}  #{trn.type} with #{trn.carriages.count} carriage(s)" }
   end
   
-  def make_passenger_carriage
-      @carriage = PassengerCarriage.new
+  def make_passenger_carriage(seats)
+      @carriage = PassengerCarriage.new(seats)
   end
 
-  def make_cargo_carriage
-      @carriage = CargoCarriage.new
+  def make_cargo_carriage(total_volume)
+      @carriage = CargoCarriage.new(total_volume)
   end
 
-  private
+  def see_train(train_number)
+    train = @trains_collection.find { |trn| trn.number == train_number }
+    if train.class == PassengerTrain
+      train.train_block_method { |carr, carriage_number| puts "Carriages:  #{carr.class} number #{carriage_number} has #{carr.free_seats} free seats and #{carr.seats_taken} seats taken"}
+    elsif train.class == CargoTrain
+      train.train_block_method { |carr, carriage_number| puts "Carriages:  #{carr.class} number #{carriage_number} has #{carr.free_volume} free volume and #{carr.volume_occupeid} volume occupeid"}
+    end
+  end
+    
+      private
+      
   # following methods are protected because they are inner methods for use only in Application
   # and don't need to be visible outside by client's code
   
