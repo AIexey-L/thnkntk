@@ -36,10 +36,9 @@ class Station
     false
   end
 
-  #method should be renamed further
-  def station_block_method
-    trains.each do |trn|
-      yield(trn)
+  def each_train
+    trains.each do |train|
+      yield(train)
     end
   end
     

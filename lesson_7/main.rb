@@ -60,8 +60,7 @@ class Application
   end
 
   def see_trains_on_station(station)
-    # get_station(station).trains.each { |train| puts "train number #{train.number} #{train.type} with #{train.carriages.length} carriages"} if station_exist?(station)
-    get_station(station).station_block_method { |trn| puts "Train number #{trn.number}  #{trn.type} with #{trn.carriages.count} carriage(s)" }
+    get_station(station).each_train { |trn| puts "Train number #{trn.number}  #{trn.type} with #{trn.carriages.count} carriage(s)" }
   end
   
   def make_passenger_carriage(seats)
@@ -74,10 +73,10 @@ class Application
 
   def see_train(train_number)
     train = @trains_collection.find { |trn| trn.number == train_number }
-    if train.class == PassengerTrain
-      train.train_block_method { |carr, carriage_number| puts "Carriages:  #{carr.class} number #{carriage_number} has #{carr.free_seats} free seats and #{carr.seats_taken} seats taken"}
-    elsif train.class == CargoTrain
-      train.train_block_method { |carr, carriage_number| puts "Carriages:  #{carr.class} number #{carriage_number} has #{carr.free_volume} free volume and #{carr.volume_occupeid} volume occupeid"}
+    if train.is_a? PassengerTrain
+      train.each_carriage { |carr, carriage_number| puts "Carriages:  #{carr.class} number #{index} has #{carr.free_seats} free seats and #{carr.seats_taken} seats taken"}
+    elsif train.is_a? CargoTrain
+      train.each_carriage { |carr, carriage_number| puts "Carriages:  #{carr.class} number #{index} has #{carr.free_volume} free volume and #{carr.volume_occupeid} volume occupeid"}
     end
   end
     

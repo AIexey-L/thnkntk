@@ -1,20 +1,22 @@
-require_relative = 'manufacturer'
+require_relative  'manufacturer'
 
 class PassengerCarriage
 
   include Manufacturer
 
-  attr_reader :seats_taken, :free_seats
+  attr_reader :free_seats
   
   def initialize(seats)
     @seats = seats.to_i
     @free_seats = @seats
-    @seats_taken = 0
   end
 
+  def seats_taken
+    @seats - @free_seats
+  end
+  
   def take_seat
     @free_seats = @free_seats - 1 if seats_remain?
-    @seats_taken = @seats - @free_seats
   end
   
   private

@@ -76,12 +76,9 @@ class Train
     true
   end
 
-  #method should be renamed further
-  def train_block_method
-    carriage_number = 0
-    carriages.each do |car|
-      carriage_number += 1 
-      yield(car, carriage_number)
+  def each_carriage
+    carriages.each.with_index(1) do |car, index|
+      yield(car, index)
     end
   end
     

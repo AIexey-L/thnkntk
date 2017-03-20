@@ -1,5 +1,4 @@
 require_relative 'main'
-require_relative 'test_case'
 
 app = Application.new
 
