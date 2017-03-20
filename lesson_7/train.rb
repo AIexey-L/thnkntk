@@ -77,9 +77,7 @@ class Train
   end
 
   def each_carriage
-    carriages.each.with_index(1) do |car, index|
-      yield(car, index)
-    end
+    carriages.each.with_index(1) { |car, index| yield(car, index) }
   end
     
   private
