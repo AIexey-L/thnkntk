@@ -54,7 +54,7 @@ module Validation
     end
     
     def var_value(attr)
-      self.instance_variable_get("@#{attr.to_sym}")
+      self.instance_variable_get("@#{attr}")
     end
 
     def presence?(attr)

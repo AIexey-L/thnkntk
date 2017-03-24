@@ -5,7 +5,14 @@ class TestClass
   include Validation::InstanceMethods
   extend Validation::ClassMethods
 
-  attr_accessor :year, :string, :number
+  # attr_accessor :year, :string, :number
+
+  def initialize(year, string, number)
+    @year = year
+    @string = string
+    @number = number
+    validate!
+  end
 
   validate :year, :presence
   validate :string, :presence
@@ -15,10 +22,10 @@ class TestClass
   validate :number, :type, Integer
 end
 
-a = TestClass.new
+a = TestClass.new(1988, '1234545', 23)
 p a.class.instance_variable_get(:@validations)
-a.year= 1988
-a.string= '12345' #wrong
-a.number= 123
-p a.valid?
-a.validate!
+# a.year= 1988
+# a.string= '1234534' #wrong
+# a.number= 123
+# p a.valid?
+# a.validate!
