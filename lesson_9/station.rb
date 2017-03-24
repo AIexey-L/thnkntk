@@ -1,9 +1,17 @@
+require_relative 'validation'
+
 class Station
   attr_reader :name, :trains
 
+  include Validation::InstanceMethods
+  extend Validation::ClassMethods
+  
   @@all = []
 
-  STATION_NAME_FORMAT = /[a-z]{3,}\s*-*\s*/i
+  STATION_NAME_FORMAT = /^[a-z]{3,15}-?[a-z]{2,5}-?[a-z]{3,15}/i
+
+  validate :name, :presence
+  validate :name, :format, STATION_NAME_FORMAT
 
   def initialize(name)
     @name = name
@@ -38,14 +46,5 @@ class Station
 
   def each_train
     trains.each { |train| yield(train) }
-  end
-
-  private
-
-  def validate!
-    raise 'Station name should not be nil' if name.nil?
-    raise 'Sation name is not valid' if name !~ STATION_NAME_FORMAT
-    raise 'Station name too long' if name.length > 15
-    true
   end
 end
