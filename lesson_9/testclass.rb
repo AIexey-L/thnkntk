@@ -28,10 +28,10 @@ end
 a = TestClass.new(1988, '12345', 23)
 p a.class.instance_variable_get(:@validations)
 a.year= 1988
-a.string= '1234' #wrong
+a.string= 'qwert' #wrong
 a.number= 123
 p a.valid?
-# a.validate!
+a.validate!
 
 # a.year= 33445
 # a.string= 'goodbuy'

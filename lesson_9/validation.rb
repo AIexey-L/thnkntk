@@ -13,9 +13,9 @@ module Validation
 
     def validate!
       self.class.instance_variable_get(:@validations).each do |val|
-        self.send("#{val.values[0].first}?",
-                  "#{val.keys[0]}",
-                  "#{val.values[0].last}")
+        self.send("#{val.values[0].first}!",
+                  (val.keys[0]),
+                  (val.values[0].last))
       end
     end
 
@@ -34,27 +34,21 @@ module Validation
       self.instance_variable_get("@#{attr}")
     end
 
-    def presence?(attr, *value)
+    def presence!(attr, *value)
       if var_value(attr).nil? || var_value(attr).to_s.empty?
         raise "'#{attr}' is nil or empty"
-      else
-        true
       end
     end
 
-    def format?(attr, value)
-      unless var_value(attr) =~  %r{#{value}}
+    def format!(attr, value)
+      unless var_value(attr) =~ value
         raise "Wrong format of argument:'#{attr}'"
-      else
-        true
       end
     end
 
-    def type?(attr, value)
-      unless var_value(attr).class.to_s == value
+    def type!(attr, value)
+      unless var_value(attr).is_a?(value)
         raise "Wrong type of argument:'#{attr}'"
-      else
-        true
       end
     end
   end
