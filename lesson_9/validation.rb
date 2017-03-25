@@ -13,9 +13,7 @@ module Validation
 
     def validate!
       self.class.instance_variable_get(:@validations).each do |val|
-        self.send("#{val.values[0].first}!",
-                  (val.keys[0]),
-                  (val.values[0].last))
+        self.send "#{val.values[0].first}!", val.keys[0], val.values[0].last
       end
     end
 
